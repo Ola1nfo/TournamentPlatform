@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { loginUser } from "../../services/auth";
@@ -7,24 +7,29 @@ import "./Login.scss";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLogging, setIsLogging] = useState(false);
 
-  const { role } = useAuth();
+  const { role, user, loading } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
+      setIsLogging(true);
       await loginUser(email, password);
-
-      setTimeout(() => {
-        if (role === "admin") navigate("/admin");
-        else if (role === "jury") navigate("/jury");
-        else navigate("/team");
-      }, 500);
-
     } catch (e: any) {
       alert(e.message);
+      setIsLogging(false);
     }
   };
+
+  // 🔥 ГОЛОВНА ЛОГІКА РЕДІРЕКТУ
+  useEffect(() => {
+    if (!loading && user) {
+      if (role === "admin") navigate("/admin");
+      else if (role === "jury") navigate("/jury");
+      else navigate("/team");
+    }
+  }, [role, user, loading, navigate]);
 
   return (
     <div className="login-wrapper">
@@ -46,7 +51,7 @@ export default function Login() {
         />
 
         <button className="login-button" onClick={handleLogin}>
-          Увійти
+          {isLogging ? "Завантаження..." : "Увійти"}
         </button>
 
       </div>

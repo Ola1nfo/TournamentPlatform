@@ -1,5 +1,6 @@
 import "./Register.scss";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../services/auth";
 
 export default function Register() {
@@ -7,10 +8,17 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
+  const navigate = useNavigate(); // 👈 ДОДАЛИ
+
   const handleRegister = async () => {
     try {
       await registerUser(email, password, name);
+
       alert("Користувач створений!");
+
+      // 👉 РЕДІРЕКТ ПІСЛЯ РЕЄСТРАЦІЇ
+      navigate("/"); // або "/login"
+
     } catch (e: any) {
       alert(e.message || "Помилка реєстрації");
     }

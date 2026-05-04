@@ -1,0 +1,58 @@
+.tournament-page {
+  padding: 30px;
+  background: #0f172a;
+  min-height: 100vh;
+  color: white;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .status {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+
+  .draft { background: gray; }
+  .registration { background: green; }
+  .running { background: orange; }
+  .finished { background: red; }
+
+  .description {
+    margin: 15px 0;
+    opacity: 0.9;
+  }
+
+  .info p {
+    margin: 5px 0;
+  }
+
+  .join-btn {
+    margin: 20px 0;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #3b82f6;
+    color: white;
+    cursor: pointer;
+  }
+
+  .join-btn:hover {
+    background: #2563eb;
+  }
+
+  .teams {
+    margin-top: 30px;
+
+    .team {
+      background: #1e293b;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+  }
+}
