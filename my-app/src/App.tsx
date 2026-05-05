@@ -9,10 +9,15 @@ import AdminUsers from "./pages/Admin/AdminUsers";
 import AdminTournaments from "./pages/Admin/AdminTournaments";
 
 import ProtectedRoute from "./components/ProtectedRoute";
+
 import TournamentPage from "./pages/Tournament/TournamentPage";
 import RegisterTeam from "./pages/Tournament/RegisterTeam";
-import Team from "./pages/Team/Team";
 import SubmitSolution from "./pages/Tournament/SubmitSolution";
+import Leaderboard from "./pages/Tournament/Leaderboard";
+
+import Team from "./pages/Team/Team";
+import Jury from "./pages/Jury/Jury";
+import Evaluate from "./pages/Jury/Evaluate";
 
 export default function App() {
   return (
@@ -23,11 +28,55 @@ export default function App() {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        <Route path="/team" element={<Team />} />
-
         <Route path="/tournament/:id" element={<TournamentPage />} />
-        <Route path="/tournament/:id/register" element={<RegisterTeam />} />
-        <Route path="/tournament/:id/submit" element={<SubmitSolution />} />
+        <Route path="/tournament/:id/leaderboard" element={<Leaderboard />} />
+
+        {/* TEAM */}
+        <Route
+          path="/team"
+          element={
+            <ProtectedRoute allowedRoles={["team"]}>
+              <Team />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/tournament/:id/register"
+          element={
+            <ProtectedRoute allowedRoles={["team"]}>
+              <RegisterTeam />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/tournament/:id/submit"
+          element={
+            <ProtectedRoute allowedRoles={["team"]}>
+              <SubmitSolution />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* JURY */}
+        <Route
+          path="/jury"
+          element={
+            <ProtectedRoute allowedRoles={["jury"]}>
+              <Jury />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/jury/:id"
+          element={
+            <ProtectedRoute allowedRoles={["jury"]}>
+              <Evaluate />
+            </ProtectedRoute>
+          }
+        />
 
         {/* ADMIN */}
         <Route

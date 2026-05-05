@@ -62,7 +62,7 @@ export default function TournamentPage() {
     setTeams(data);
   };
 
-  // 🔍 перевірка реєстрації команди
+  // 🔍 перевірка реєстрації
   const checkRegistration = async () => {
     if (!user || !id) return;
 
@@ -97,6 +97,23 @@ export default function TournamentPage() {
         </span>
       </div>
 
+      {/* STATUS MESSAGE */}
+      {tournament.status === "draft" && (
+        <p>📝 Турнір ще не відкритий</p>
+      )}
+
+      {tournament.status === "registration" && (
+        <p>🟢 Триває реєстрація</p>
+      )}
+
+      {tournament.status === "running" && (
+        <p>⚔ Турнір у процесі</p>
+      )}
+
+      {tournament.status === "finished" && (
+        <p>🏁 Турнір завершено</p>
+      )}
+
       {/* DESCRIPTION */}
       <p className="description">
         {tournament.description}
@@ -112,9 +129,16 @@ export default function TournamentPage() {
         <p>👥 Макс команд: {tournament.maxTeams}</p>
       </div>
 
-      {/* 🟢 REGISTER BUTTON */}
+      {/* 🟢 REGISTER */}
       {tournament.status === "registration" && (
-        isRegistered ? (
+        !user ? (
+          <button
+            className="join-btn"
+            onClick={() => navigate("/")}
+          >
+            🔐 Увійдіть щоб зареєструватись
+          </button>
+        ) : isRegistered ? (
           <button className="join-btn" disabled>
             ✅ Ви вже зареєстровані
           </button>
@@ -130,18 +154,20 @@ export default function TournamentPage() {
         )
       )}
 
-      {/* 👥 TEAMS */}
-      <div className="teams">
-        <h3>👥 Команди ({teams.length})</h3>
+      {/* 👥 TEAMS (ховаємо під час реєстрації) */}
+      {tournament.status !== "registration" && (
+        <div className="teams">
+          <h3>👥 Команди ({teams.length})</h3>
 
-        {teams.map(team => (
-          <div key={team.id} className="team">
-            {team.teamName}
-          </div>
-        ))}
-      </div>
+          {teams.map(team => (
+            <div key={team.id} className="team">
+              {team.teamName}
+            </div>
+          ))}
+        </div>
+      )}
 
-      {/* 🎯 RUNNING TASK */}
+      {/* 🎯 TASK */}
       {tournament.status === "running" && (
         <div className="task">
           <h3>⚔ Завдання активне</h3>
@@ -152,6 +178,21 @@ export default function TournamentPage() {
             }
           >
             📤 Подати роботу
+          </button>
+        </div>
+      )}
+
+      {/* 🏆 LEADERBOARD */}
+      {tournament.status === "finished" && (
+        <div className="leaderboard">
+          <h3>🏆 Результати</h3>
+
+          <button
+            onClick={() =>
+              navigate(`/tournament/${id}/leaderboard`)
+            }
+          >
+            Переглянути рейтинг
           </button>
         </div>
       )}
