@@ -1,0 +1,39 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px 20px;
+  background: #111;
+  color: white;
+}
+
+.logo {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.role {
+  font-size: 14px;
+  opacity: 0.7;
+  text-transform: uppercase;
+}
+
+.logout {
+  background: crimson;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.logout:hover {
+  opacity: 0.8;
+}

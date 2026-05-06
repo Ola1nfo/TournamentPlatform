@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
@@ -19,9 +19,20 @@ import Team from "./pages/Team/Team";
 import Jury from "./pages/Jury/Jury";
 import Evaluate from "./pages/Jury/Evaluate";
 
-export default function App() {
+import Header from "./components/Header/Header";
+
+function AppLayout() {
+  const location = useLocation();
+
+  // ❌ ховаємо header на auth сторінках
+  const hideHeader =
+    location.pathname === "/" ||
+    location.pathname === "/register";
+
   return (
-    <BrowserRouter>
+    <>
+      {!hideHeader && <Header />}
+
       <Routes>
 
         {/* PUBLIC */}
@@ -93,6 +104,14 @@ export default function App() {
         </Route>
 
       </Routes>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppLayout />
     </BrowserRouter>
   );
 }
