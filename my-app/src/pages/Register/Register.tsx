@@ -7,13 +7,13 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   const handleRegister = async () => {
-    // 🔴 ВАЛІДАЦІЯ
-    if (!name || !email || !password) {
+    if (!email || !password || !name) {
       alert("Заповніть всі поля");
       return;
     }
@@ -29,7 +29,6 @@ export default function Register() {
       await registerUser(email, password, name);
 
       alert("Користувач створений!");
-
       navigate("/");
 
     } catch (e: any) {
